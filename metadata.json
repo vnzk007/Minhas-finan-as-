@@ -1,0 +1,6 @@
+{
+  "name": "AppCentral - Hub de Produtividade & Gestão",
+  "description": "Aplicativo completo e intuitivo para gestão financeira, organização de tarefas em quadro, rastreador de hábitos saudáveis e anotações rápidas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
