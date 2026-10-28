@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { DailyClosing, FuelExpense, OtherExpense } from '../types';
-import { X, Download, Upload, RefreshCw, Trash2, ShieldCheck } from 'lucide-react';
+import { X, Download, Upload, Trash2, ShieldCheck } from 'lucide-react';
 
 interface StorageBackupModalProps {
   isOpen: boolean;
@@ -9,7 +9,6 @@ interface StorageBackupModalProps {
   fuelExpenses: FuelExpense[];
   otherExpenses: OtherExpense[];
   onImportData: (data: { closings: DailyClosing[]; fuelExpenses: FuelExpense[]; otherExpenses: OtherExpense[] }) => void;
-  onLoadSampleData: () => void;
   onClearAllData: () => void;
 }
 
@@ -20,7 +19,6 @@ export const StorageBackupModal: React.FC<StorageBackupModalProps> = ({
   fuelExpenses,
   otherExpenses,
   onImportData,
-  onLoadSampleData,
   onClearAllData,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -138,29 +136,10 @@ export const StorageBackupModal: React.FC<StorageBackupModalProps> = ({
               </div>
             </button>
 
-            {/* Carregar Exemplo */}
-            <button
-              onClick={() => {
-                if (confirm('Carregar dados de exemplo realistas deste mês?')) {
-                  onLoadSampleData();
-                  onClose();
-                }
-              }}
-              className="w-full flex items-center justify-between p-3.5 bg-white border border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50 rounded-xl transition-all cursor-pointer text-left"
-            >
-              <div className="flex items-center gap-3">
-                <RefreshCw className="w-4 h-4 text-amber-700" />
-                <div>
-                  <div className="text-xs font-bold text-neutral-900">Carregar Dados de Exemplo (Demonstração)</div>
-                  <div className="text-[11px] text-neutral-500">Preenche vários dias com corridas e gasolina para você testar</div>
-                </div>
-              </div>
-            </button>
-
             {/* Limpar tudo */}
             <button
               onClick={() => {
-                if (confirm('Atenção: Tem certeza que deseja apagar todos os registros do aplicativo?')) {
+                if (confirm('Atenção: Tem certeza que deseja apagar todos os seus registros?')) {
                   onClearAllData();
                   onClose();
                 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { DailyClosing, FuelExpense, OtherExpense } from './types';
-import { SAMPLE_CLOSINGS, SAMPLE_FUELS, SAMPLE_OTHERS } from './data/sampleData';
 import {
   getTodayDateString,
   getCurrentMonthString,
@@ -17,36 +16,36 @@ import { ExpenseModal } from './components/ExpenseModal';
 import { StorageBackupModal } from './components/StorageBackupModal';
 import { Fuel, DollarSign, Database, Check } from 'lucide-react';
 
-const STORAGE_KEY_CLOSINGS = 'diaria_tanque_closings_v1';
-const STORAGE_KEY_FUELS = 'diaria_tanque_fuels_v1';
-const STORAGE_KEY_OTHERS = 'diaria_tanque_others_v1';
+const STORAGE_KEY_CLOSINGS = 'diaria_tanque_closings_prod';
+const STORAGE_KEY_FUELS = 'diaria_tanque_fuels_prod';
+const STORAGE_KEY_OTHERS = 'diaria_tanque_others_prod';
 
 export default function App() {
-  // Load from local storage or initialize with sample data
+  // Load from local storage (100% clean in production)
   const [closings, setClosings] = useState<DailyClosing[]>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_CLOSINGS);
-      return stored ? JSON.parse(stored) : SAMPLE_CLOSINGS;
+      return stored ? JSON.parse(stored) : [];
     } catch {
-      return SAMPLE_CLOSINGS;
+      return [];
     }
   });
 
   const [fuelExpenses, setFuelExpenses] = useState<FuelExpense[]>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_FUELS);
-      return stored ? JSON.parse(stored) : SAMPLE_FUELS;
+      return stored ? JSON.parse(stored) : [];
     } catch {
-      return SAMPLE_FUELS;
+      return [];
     }
   });
 
   const [otherExpenses, setOtherExpenses] = useState<OtherExpense[]>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_OTHERS);
-      return stored ? JSON.parse(stored) : SAMPLE_OTHERS;
+      return stored ? JSON.parse(stored) : [];
     } catch {
-      return SAMPLE_OTHERS;
+      return [];
     }
   });
 
@@ -226,13 +225,6 @@ export default function App() {
     setFuelExpenses(data.fuelExpenses || []);
     setOtherExpenses(data.otherExpenses || []);
     showToast('Dados restaurados com sucesso!');
-  };
-
-  const handleLoadSampleData = () => {
-    setClosings(SAMPLE_CLOSINGS);
-    setFuelExpenses(SAMPLE_FUELS);
-    setOtherExpenses(SAMPLE_OTHERS);
-    showToast('Dados de demonstração carregados!');
   };
 
   const handleClearAllData = () => {
@@ -422,7 +414,6 @@ export default function App() {
         fuelExpenses={fuelExpenses}
         otherExpenses={otherExpenses}
         onImportData={handleImportData}
-        onLoadSampleData={handleLoadSampleData}
         onClearAllData={handleClearAllData}
       />
 
